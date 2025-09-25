@@ -4,7 +4,7 @@ pipeline {
         stage('Build Report') {
             steps {
                 // create a test HTML file
-                bat 'mkdir -p report'
+                bat 'mkdir report'
                 writeFile file: 'report/index.html', text: '<html><body><h2>Hello Jenkins Report!</h2></body></html>'
             }
         }
