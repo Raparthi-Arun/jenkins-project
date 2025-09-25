@@ -1,42 +1,22 @@
 pipeline {
     agent any
+
     stages {
-        stage('Build Report') {
+        stage('Build') {
             steps {
-                // Create "report" folder and sample index.html file
+                // Ensure folder exists
                 bat 'mkdir report'
-                writeFile file: 'report/index.html', text: '''
-                <html>
-                  <head><title>User Registration</title></head>
-                  <body>
-                    <h2>User Registration Form</h2>
-                    <form>
-                        <label for="name">Full Name:</label>
-                        <input type="text" id="name" name="name" required><br><br>
-
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" required><br><br>
-
-                        <label for="phone">Phone Number:</label>
-                        <input type="tel" id="phone" name="phone" required><br><br>
-
-                        <label for="organisation">Organisation:</label>
-                        <input type="text" id="organisation" name="organisation" required><br><br>
-
-                        <input type="submit" value="Register">
-                    </form>
-                  </body>
-                </html>
-                '''
+                // Copy HTML file into report folder
+                bat 'copy index.html report\\index.html'
             }
         }
 
         stage('Publish Report') {
             steps {
-                publishHTML([
+                publishHTML([ 
                     reportDir: 'report',
                     reportFiles: 'index.html',
-                    reportName: 'HTML Report',
+                    reportName: 'My Web Output',
                     keepAll: true,
                     alwaysLinkToLastBuild: true,
                     allowMissing: false
