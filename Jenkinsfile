@@ -3,9 +3,10 @@ pipeline {
     stages {
         stage('Build Report') {
             steps {
-                // create a test HTML file
+                // make sure report folder exists
                 bat 'mkdir report'
-                writeFile file: 'report/index.html', text: '<html><body><h2>Hello Jenkins Report!</h2></body></html>'
+                // copy index.html from workspace root (GitHub) to report folder
+                bat 'copy index.html report\\index.html'
             }
         }
         stage('Publish Report') {
